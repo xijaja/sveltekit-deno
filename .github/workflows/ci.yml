@@ -3,49 +3,99 @@ name: ci
 on:
   push:
     branches:
-      - main # 当 main 分支有 push 事件时触发
+      - main
   pull_request:
     branches:
-      - main # 当 main 分支有 pull request 事件时触发
+      - main
 
 jobs:
   deploy:
-    name: deploy # 任务名称
-    runs-on: ubuntu-latest # 运行环境
+    name: deploy
+    runs-on: ubuntu-latest
     permissions:
-      id-token: write # 需要写入权限
-      contents: read # 需要读取权限
+      id-token: write
+      contents: read
 
     steps:
-      - name: Clone repository # 克隆仓库
+      - name: Clone repository
         uses: actions/checkout@v3
 
-      - name: Install Node 18 # 安装 Node 18
+      - name: Install Node
         uses: actions/setup-node@v2
         with:
-          node-version: 18 # Node 版本为 18
+          node-version: 16
 
-      - name: Cache pnpm modules # 缓存 pnpm 模块
+      - name: Cache pnpm modules
         uses: actions/cache@v2
         with:
-          path: ~/.pnpm-store # 缓存路径
-          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }} # 缓存键
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-
 
-      - name: Install pnpm and node_modules # 安装 pnpm 和 node_modules
+      - name: Install pnpm and node_modules
         uses: pnpm/action-setup@v2
         with:
-          version: latest # pnpm 版本为最新
-          run_install: true # 运行 pnpm install
+          version: latest
+          run_install: true
 
-      - name: Build site # 构建站点
-        run: pnpm build # 运行 pnpm build
-        working-directory: '.' #  设置工作目录
+      - name: Build site
+        run: pnpm build
+        working-directory: '.' # if necessary, should contain {out}
 
-      - name: Deploy to Deno Deploy # 部署到 Deno Deploy
-        uses: denoland/deployctl@v1 # 使用 deployctl action
+      - name: Deploy to Deno Deploy
+        uses: denoland/deployctl@v1
         with:
-          project: svelte-kit # 项目名称 todo 替换你的项目名称
-          entrypoint: ./index.js # 入口文件与配置中的`out`选项相同
-          root: build # 如果有必要的话，设置项目根目录
+          project: "ben-deno-svelte"
+          entrypoint: './index.js' # same as `out` option in config
+          root: 'build' # if necessary
+
+# on:
+#   push:
+#     branches:
+#       - main # 当 main 分支有 push 事件时触发
+#   pull_request:
+#     branches:
+#       - main # 当 main 分支有 pull request 事件时触发
+
+# jobs:
+#   deploy:
+#     name: deploy # 任务名称
+#     runs-on: ubuntu-latest # 运行环境
+#     permissions:
+#       id-token: write # 需要写入权限
+#       contents: read # 需要读取权限
+
+#     steps:
+#       - name: Clone repository # 克隆仓库
+#         uses: actions/checkout@v3
+
+#       - name: Install Node 18 # 安装 Node 18
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: 18 # Node 版本为 18
+
+#       - name: Cache pnpm modules # 缓存 pnpm 模块
+#         uses: actions/cache@v2
+#         with:
+#           path: ~/.pnpm-store # 缓存路径
+#           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }} # 缓存键
+#           restore-keys: |
+#             ${{ runner.os }}-
+
+#       - name: Install pnpm and node_modules # 安装 pnpm 和 node_modules
+#         uses: pnpm/action-setup@v2
+#         with:
+#           version: latest # pnpm 版本为最新
+#           run_install: true # 运行 pnpm install
+
+#       - name: Build site # 构建站点
+#         run: pnpm build # 运行 pnpm build
+#         working-directory: '.' #  设置工作目录
+
+#       - name: Deploy to Deno Deploy # 部署到 Deno Deploy
+#         uses: denoland/deployctl@v1 # 使用 deployctl action
+#         with:
+#           project: svelte-kit # 项目名称 todo 替换你的项目名称
+#           entrypoint: ./index.js # 入口文件与配置中的`out`选项相同
+#           root: build # 如果有必要的话，设置项目根目录
