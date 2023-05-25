@@ -46,6 +46,6 @@ jobs:
       - name: Deploy to Deno Deploy # 部署到 Deno Deploy
         uses: denoland/deployctl@v1 # 使用 deployctl action
         with:
-          project: sveltekit-deno # 项目名称 todo 替换你的项目名称
+          project: svelte-kit # 项目名称 todo 替换你的项目名称
           entrypoint: '{out}/index.js' # 入口文件 <out> 为构建输出目录，与配置中的`out`选项相同
           # root: '<root>' # 如果有必要的话，设置为 <root> 为项目根目录
