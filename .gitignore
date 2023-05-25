@@ -1,0 +1,18 @@
+# dependencies
+node_modules
+/build
+/.svelte-kit
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# local env files
+.DS_Store
+.env
+.env.*
+!.env.example
+/package
+makefile
+
+# ide
+.idea
+.vscode
