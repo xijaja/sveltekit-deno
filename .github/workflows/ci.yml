@@ -47,5 +47,5 @@ jobs:
         uses: denoland/deployctl@v1 # 使用 deployctl action
         with:
           project: svelte-kit # 项目名称 todo 替换你的项目名称
-          entrypoint: 'build/index.js' # 入口文件与配置中的`out`选项相同
+          entrypoint: '/build/index.js' # 入口文件与配置中的`out`选项相同
           # root: 'app' # 如果有必要的话，设置项目根目录
