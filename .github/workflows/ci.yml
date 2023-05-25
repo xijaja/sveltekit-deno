@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Clone repository # 克隆仓库
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install Node 18 # 安装 Node 18
         uses: actions/setup-node@v2
@@ -47,5 +47,5 @@ jobs:
         uses: denoland/deployctl@v1 # 使用 deployctl action
         with:
           project: svelte-kit # 项目名称 todo 替换你的项目名称
-          entrypoint: './index.js' # 入口文件与配置中的`out`选项相同
-          root: 'build' # 如果有必要的话，设置项目根目录
+          entrypoint: ./index.js # 入口文件与配置中的`out`选项相同
+          root: build # 如果有必要的话，设置项目根目录
