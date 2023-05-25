@@ -1,6 +1,12 @@
 name: Deploy
 
-on: push
+on:
+  push:
+    branches:
+      - main # 当 main 分支有 push 事件时触发
+  pull_request:
+    branches:
+      - main # 当 main 分支有 pull request 事件时触发
 
 jobs:
   deploy:
@@ -11,16 +17,16 @@ jobs:
       contents: read
 
     steps:
-      - name: Clone repository
+      - name: Clone repository 克隆仓库
         uses: actions/checkout@v3
 
-      - name: Build project
+      - name: Build project 构建项目
         run: |
           npm i -g pnpm
           pnpm i
           pnpm run build
 
-      - name: Deploy to Deno Deploy
+      - name: Deploy to Deno Deploy 执行部署
         uses: denoland/deployctl@v1
         with:
           project: svelte-kit
