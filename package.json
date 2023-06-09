@@ -32,6 +32,8 @@
 		"vite": "^4.3.8"
 	},
 	"dependencies": {
+		"@supabase/auth-helpers-sveltekit": "^0.10.1",
+		"@supabase/supabase-js": "^2.24.0",
 		"@tailwindcss/typography": "^0.5.9"
 	}
 }
